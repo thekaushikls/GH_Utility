@@ -1,4 +1,4 @@
-name: Run Python Script
+name: Plugin Download Counter
 
 on:
   workflow_dispatch:
