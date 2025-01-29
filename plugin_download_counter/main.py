@@ -2,10 +2,17 @@ import sys, requests, json
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+def get_headers() -> dict:
+    return {
+       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+       "Referer": "https://www.infrared.city"
+    }
+
 def get_count_from_package_manager(package_name: str) -> int:
 
     endpoint = "https://rhinopackages.blob.core.windows.net/packages/data.json"
-    response = requests.get(endpoint)
+    headers = get_headers()
+    response = requests.get(endpoint, headers=headers)
     response.raise_for_status()
 
     raw_data = response.text
@@ -22,7 +29,8 @@ def get_count_from_package_manager(package_name: str) -> int:
 def get_count_from_food4rhino(package_name: str) -> int:
 
     endpoint = f"https://www.food4rhino.com/en/app/{package_name}"
-    response = requests.get(endpoint)
+    headers = get_headers()
+    response = requests.get(endpoint, headers=headers)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
